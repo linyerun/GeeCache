@@ -28,7 +28,7 @@ func (hs *HttpServer) ServeHTTP(resp http.ResponseWriter, req *http.Request) {
 	utils.Logger().Infof("[%s] path=%s addr=%s is comming at %v", req.Method, req.URL.Path, req.RemoteAddr, time.Now().Format("2006-01-02 15:04:05"))
 
 	// 不以 BasePath 开头, 拒绝处理
-	if !strings.HasPrefix(req.URL.Path, hs.basePath) {
+	if !strings.HasPrefix(req.URL.Path, "/"+hs.basePath) {
 		utils.Logger().Errorln("HttpServer serving unexpected path: " + req.URL.Path)
 		http.Error(resp, "HttpServer serving unexpected path: "+req.URL.Path, http.StatusBadRequest)
 		return
