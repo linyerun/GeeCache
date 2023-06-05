@@ -31,7 +31,7 @@ func (g *Group) Get(key string) (cache.IByteView, error) {
 		return val, nil
 	}
 
-	data, err := g.singleFighting.Do(key, func() (any, error) {
+	data, err := g.singleFighting.Do(key+"-GET", func() (any, error) {
 		// 判断是否开启了分布式节点模式
 		if clientsGetter != nil { // 开启了
 			client, _ := clientsGetter.GetNodeClient(key)
@@ -60,7 +60,7 @@ func (g *Group) Get(key string) (cache.IByteView, error) {
 }
 
 func (g *Group) Delete(key string) (err error) {
-	_, err = g.singleFighting.Do(key, func() (any, error) {
+	_, err = g.singleFighting.Do(key+"-DELETE", func() (any, error) {
 		// 判断是否开启了分布式节点模式
 		if clientsGetter != nil { // 开启了
 			client, _ := clientsGetter.GetNodeClient(key)

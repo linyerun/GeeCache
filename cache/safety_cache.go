@@ -1,6 +1,7 @@
 package cache
 
 import (
+	"fmt"
 	"github.com/linyerun/GeeCache/lru"
 	"sync"
 )
@@ -11,6 +12,11 @@ type safetyCache struct {
 }
 
 func NewSafetyCache(maxBytes int64, onEvicted func(key string, value IByteView)) ISafetyCache {
+	if onEvicted == nil {
+		onEvicted = func(key string, value IByteView) {
+			fmt.Printf("execute default onEvicted: the key = %v has been deleted, the value is %v", key, value.String())
+		}
+	}
 	return &safetyCache{
 		mu: sync.RWMutex{},
 		lruCache: lru.NewLruCache(maxBytes, func(key string, value lru.Value) {
