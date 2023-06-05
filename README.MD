@@ -44,6 +44,19 @@ func main() {
 }
 ```
 
+```shell
+#! /bin/bash
+
+go build -o server main.go
+
+./server -port 6666 &
+./server -port 7777 &
+./server -port 8888 &
+./server -port 9999 &
+
+rm -f server
+```
+
 # utils包
 - 目前只整合了logrus第三方包进来，作用是进行日志输出
 
