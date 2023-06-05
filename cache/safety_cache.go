@@ -1,8 +1,8 @@
 package cache
 
 import (
-	"fmt"
 	"github.com/linyerun/GeeCache/lru"
+	"github.com/linyerun/GeeCache/utils"
 	"sync"
 )
 
@@ -14,7 +14,7 @@ type safetyCache struct {
 func NewSafetyCache(maxBytes int64, onEvicted func(key string, value IByteView)) ISafetyCache {
 	if onEvicted == nil {
 		onEvicted = func(key string, value IByteView) {
-			fmt.Printf("execute default onEvicted: the key = %v has been deleted, the value is %v", key, value.String())
+			utils.Logger().Printf("execute default onEvicted: the key = %v has been deleted, the value is %v", key, value.String())
 		}
 	}
 	return &safetyCache{

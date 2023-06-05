@@ -12,19 +12,21 @@ var myLog *logrus.Logger
 var once sync.Once
 
 func Logger() *logrus.Logger {
-	once.Do(func() {
-		myLog = logrus.New()              //创建logrus
-		myLog.SetLevel(logrus.DebugLevel) //设置日志级别
-		myLog.SetFormatter(               //设置时间格式
-			&logrus.TextFormatter{TimestampFormat: "2006-01-02 15:04:05"},
-		)
-		output, err := getOutputFile()
-		if err != nil {
-			panic(err)
-		}
-		myLog.SetOutput(output)    // 设置输入文件
-		myLog.AddHook(new(myHook)) //添加钩子
-	})
+	once.Do(
+		func() {
+			myLog = logrus.New()              //创建logrus
+			myLog.SetLevel(logrus.DebugLevel) //设置日志级别
+			myLog.SetFormatter(               //设置时间格式
+				&logrus.TextFormatter{TimestampFormat: "2006-01-02 15:04:05"},
+			)
+			output, err := getOutputFile()
+			if err != nil {
+				panic(err)
+			}
+			myLog.SetOutput(output)    // 设置输入文件
+			myLog.AddHook(new(myHook)) //添加钩子
+		},
+	)
 	return myLog
 }
 
