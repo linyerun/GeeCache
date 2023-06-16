@@ -56,6 +56,9 @@ func (g *Group) Get(key string) (cache.IByteView, error) {
 		return byteView, err
 	})
 
+	if err != nil {
+		return nil, err
+	}
 	return data.(cache.IByteView), err
 }
 
